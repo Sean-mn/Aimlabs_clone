@@ -12,6 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
@@ -25,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void Timer()
     {
-        if (min <= 0 && sec <= 0)
+        if (!isGameOver && min <= 0 && sec <= 0)
         {
             GameOver();
             return;
@@ -37,7 +38,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             if (min > 0)
             {
-                min = 0;
+                min -= 1;
                 sec = 59;
             }
             else
@@ -51,6 +52,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameOver()
     {
         isGameOver = true;
+        Time.timeScale = 0f;
         Debug.Log("Game Over");
     }
 }
