@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public int score;
+    [SerializeField, Header("Score")]
+    private int score;
+    public int Score {  get { return score; } }
 
-    [Header("Timer")]
-    public float sec = 20;
-    public int min = 1;
+    [field: SerializeField, Header("Timer")]
+    public float Time {  get; private set; }
 
+    [Header("Game Trigger")]
+    public bool isGameStart = false;
     public bool isGameOver = false;
 
     private void Start()
@@ -18,41 +21,25 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
-        if (!isGameOver)
-        {
-            Timer();
-        }
+        UpdataTime();
     }
 
-    public void Timer()
+    public void UpdataTime()
     {
-        if (!isGameOver && min <= 0 && sec <= 0)
-        {
-            GameOver();
-            return;
-        }
+        if (isGameOver) return;
 
-        sec -= Time.deltaTime; 
+        Time += UnityEngine.Time.deltaTime;
+    }
 
-        if (sec < 0)
-        {
-            if (min > 0)
-            {
-                min -= 1;
-                sec = 59;
-            }
-            else
-            {
-                sec = 0;
-                GameOver();
-            }
-        }
+    public void GameStart()
+    {
+        isGameStart = true;
+        Time = 0;
     }
 
     public void GameOver()
     {
         isGameOver = true;
-        Time.timeScale = 0f;
         Debug.Log("Game Over");
     }
 }
