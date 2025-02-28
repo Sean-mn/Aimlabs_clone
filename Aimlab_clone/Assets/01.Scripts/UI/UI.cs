@@ -12,10 +12,15 @@ public abstract class UI : MonoBehaviour
 
     public virtual void UIFunction()
     {
-        return;
     }
-
+    public virtual void UIFunction(float value)
+    {
+    }
     public virtual IEnumerator UIFunctionCoroutine()
+    {
+        yield return null;
+    }
+    public virtual IEnumerator UIFunctionCoroutine(float value)
     {
         yield return null;
     }
