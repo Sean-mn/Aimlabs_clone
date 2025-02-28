@@ -1,45 +1,61 @@
 using UnityEngine;
+using System;
 
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField, Header("Score")]
     private int score;
-    public int Score {  get { return score; } }
+    public int Score => score;
 
     [field: SerializeField, Header("Timer")]
-    public float Time {  get; private set; }
+    public float GameTime { get; private set; }
 
-    [Header("Game Trigger")]
-    public bool isGameStart = false;
-    public bool isGameOver = false;
+    [field: SerializeField,Header("Game Trigger")]
+    public bool IsGameStart { get; private set; } = false;
+    public bool IsGameOver { get; private set; } = false;
+
+    public event Action onGameStart;
+    public event Action onGameOver;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        StartCoroutine(Countdown.StartCountdown(GameStart));
     }
 
     private void Update()
     {
-        UpdataTime();
+        if (!IsGameStart || IsGameOver) return;
+
+        UpdateTime();
     }
 
-    public void UpdataTime()
+    private void UpdateTime()
     {
-        if (isGameOver) return;
-
-        Time += UnityEngine.Time.deltaTime;
+        GameTime += Time.deltaTime;
     }
 
     public void GameStart()
     {
-        isGameStart = true;
-        Time = 0;
+        IsGameStart = true;
+        IsGameOver = false;
+        GameTime = 0;
+        score = 0;
+        onGameStart?.Invoke();
     }
 
     public void GameOver()
     {
-        isGameOver = true;
+        IsGameOver = true;
+        IsGameStart = false;
         Debug.Log("Game Over");
+        onGameOver?.Invoke();
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
     }
 }
