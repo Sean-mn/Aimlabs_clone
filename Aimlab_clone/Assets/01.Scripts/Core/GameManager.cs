@@ -17,6 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        SetMaxTime(90f);
         InitGame();
     }
 
@@ -32,31 +33,42 @@ public class GameManager : MonoSingleton<GameManager>
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        GameTime = 0;
-        MaxGameTime = 20;
+        GameTime = GetMaxTime();
 
         StartCoroutine(Countdown.StartCountdown(GameStart));
     }
 
     private void UpdateTime()
     {
-        GameTime = Mathf.Max(0, GameTime + Time.deltaTime);
+        GameTime = Mathf.Max(0, GameTime - Time.deltaTime);
+
+        if (GameTime <= 0)
+            GameOver();
     }
 
     public void GameStart()
     {
         onGameStart?.Invoke();
+
         IsGameStart = true;
         IsGameOver = false;
     }
 
     public void GameOver()
     {
-        if (IsGameOver) return;
-
         IsGameOver = true;
         IsGameStart = false;
 
         onGameOver?.Invoke();
+    }
+
+    public float GetMaxTime()
+    {
+        return MaxGameTime;
+    }
+
+    public void SetMaxTime(float maxTime)
+    {
+        MaxGameTime = maxTime;
     }
 }

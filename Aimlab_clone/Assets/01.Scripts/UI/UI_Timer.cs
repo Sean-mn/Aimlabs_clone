@@ -28,5 +28,10 @@ public class UI_Timer : UI
         int sec = Mathf.FloorToInt(GameManager.Instance.GameTime % 60);
 
         TimerText.text = string.Format("{0:00}:{1:00}", min, sec);
+
+        if (GameManager.Instance.GameTime + 10 >= GameManager.Instance.MaxGameTime)
+        {
+
+        }
     }
 }
