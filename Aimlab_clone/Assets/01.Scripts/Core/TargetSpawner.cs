@@ -39,11 +39,11 @@ public class TargetSpawner : MonoBehaviour
 
     public IEnumerator Spawn()
     {
-        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        float waitTime = 0.2f;
 
         while (GameManager.Instance.GameTime < GameManager.Instance.MaxGameTime)
         {
-            yield return delay;
+            yield return WaitForSecondsCache.Wait(waitTime);
 
             int createPos = Random.Range(0, targetPoses.Count);
 

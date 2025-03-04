@@ -13,16 +13,18 @@ public class Countdown
             yield break;
         }
 
-        WaitForSeconds delay = new WaitForSeconds(1);
+        float waitTime = 1f;
 
         for (int i = 3; i > 0; i--)
         {
             UIManager.Instance.CountdownUI.UIFunction(i);
-            yield return delay;
+
+            yield return WaitForSecondsCache.Wait(waitTime);
         }
 
         UIManager.Instance.CountdownUI.CountdownText.text = "Start";
-        yield return delay;
+
+        yield return WaitForSecondsCache.Wait(waitTime);
 
         call?.Invoke();
 
