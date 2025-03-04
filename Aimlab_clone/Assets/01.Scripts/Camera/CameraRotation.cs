@@ -19,7 +19,7 @@ public class CameraRotation : MonoBehaviour
 
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.onGameStart -= CanRotate;
         GameManager.Instance.onGameOver -= CantRotate;
