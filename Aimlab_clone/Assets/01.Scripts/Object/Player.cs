@@ -31,11 +31,11 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDistance, hitLayer))
         {
-            Debug.Log($"Hit: {hit.collider.name}");
+            Target target = hit.collider.gameObject.GetComponent<Target>();
 
             if (hit.collider.CompareTag("Target"))
             {
-                Debug.Log("Target Hit");
+                target.Catched();
             }
         }
     }

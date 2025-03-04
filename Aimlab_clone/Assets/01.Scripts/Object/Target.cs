@@ -9,6 +9,11 @@ public class Target : MonoBehaviour
         targetPrefab = GetComponent<GameObject>();
     }
 
+    public void Catched()
+    {
+        Destroy(this.gameObject);
+    }
+
     private void OnDestroy()
     {
         ScoreManager.Instance.AddScore(100);
