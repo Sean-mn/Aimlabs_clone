@@ -1,3 +1,5 @@
+using System;
+
 public class Define
 {
     public class Tags
@@ -11,5 +13,20 @@ public class Define
         Ground,
         Player,
         Target,
+    }
+
+    public enum Scene
+    {
+        UnKnown = 0,
+        Play = 1,
+        Ranking = 2,
+    }
+
+    [Flags]
+    public enum GameState
+    {
+        Menu,
+        Playing,
+        GameOver,
     }
 }
