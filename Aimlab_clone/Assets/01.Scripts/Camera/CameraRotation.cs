@@ -7,9 +7,12 @@ public class CameraRotation : MonoBehaviour
     private float mouseX;
     private float mouseY;
 
+    public bool canRotate = true;
+
     private void Update()
     {
-        Rotation();
+        if (canRotate)
+            Rotation();
     }
 
     private void Rotation()

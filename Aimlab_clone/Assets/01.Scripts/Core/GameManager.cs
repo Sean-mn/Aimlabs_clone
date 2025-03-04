@@ -10,20 +10,30 @@ public class GameManager : MonoSingleton<GameManager>
     [field: SerializeField, Header("Timer")]
     public float GameTime { get; private set; }
 
-    [field: SerializeField,Header("Game Trigger")]
+    [field: SerializeField, Header("Game Triggers")]
     public bool IsGameStart { get; private set; } = false;
-    [field: SerializeField, Header("Game Trigger")]
+    [field: SerializeField]
     public bool IsGameOver { get; private set; } = false;
+
+    [field: SerializeField, Header("Reference")]
+    public CameraRotation CameraRotate { get; private set; }
 
     public event Action onGameStart;
     public event Action onGameOver;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (CameraRotate == null)
+        {
+            CameraRotate = FindAnyObjectByType<CameraRotation>();
+        }
+    }
+
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        StartCoroutine(Countdown.StartCountdown(GameStart));
+        InitGame();
     }
 
     private void Update()
@@ -33,25 +43,36 @@ public class GameManager : MonoSingleton<GameManager>
         UpdateTime();
     }
 
+    private void InitGame()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        GameTime = 0;
+        score = 0;
+
+        StartCoroutine(Countdown.StartCountdown(GameStart));
+    }
+
     private void UpdateTime()
     {
-        GameTime += Time.deltaTime;
+        GameTime = Mathf.Max(0, GameTime + Time.deltaTime);
     }
 
     public void GameStart()
     {
         IsGameStart = true;
         IsGameOver = false;
-        GameTime = 0;
-        score = 0;
         onGameStart?.Invoke();
     }
 
     public void GameOver()
     {
+        if (IsGameOver) return;
+
         IsGameOver = true;
         IsGameStart = false;
-        Debug.Log("Game Over");
+
         onGameOver?.Invoke();
     }
 
