@@ -3,33 +3,17 @@ using System;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField, Header("Score")]
-    private int score;
-    public int Score => score;
-
     [field: SerializeField, Header("Timer")]
     public float GameTime { get; private set; }
+    public float MaxGameTime;
 
     [field: SerializeField, Header("Game Triggers")]
     public bool IsGameStart { get; private set; } = false;
     [field: SerializeField]
     public bool IsGameOver { get; private set; } = false;
 
-    [field: SerializeField, Header("Reference")]
-    public CameraRotation CameraRotate { get; private set; }
-
     public event Action onGameStart;
     public event Action onGameOver;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (CameraRotate == null)
-        {
-            CameraRotate = FindAnyObjectByType<CameraRotation>();
-        }
-    }
 
     private void Start()
     {
@@ -49,7 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
         Cursor.visible = false;
 
         GameTime = 0;
-        score = 0;
+        MaxGameTime = 20;
 
         StartCoroutine(Countdown.StartCountdown(GameStart));
     }
@@ -61,9 +45,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameStart()
     {
+        onGameStart?.Invoke();
         IsGameStart = true;
         IsGameOver = false;
-        onGameStart?.Invoke();
     }
 
     public void GameOver()
@@ -74,10 +58,5 @@ public class GameManager : MonoSingleton<GameManager>
         IsGameStart = false;
 
         onGameOver?.Invoke();
-    }
-
-    public void AddScore(int amount)
-    {
-        score += amount;
     }
 }
