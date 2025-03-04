@@ -9,10 +9,36 @@ public class CameraRotation : MonoBehaviour
 
     public bool canRotate = true;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.onGameStart -= CanRotate;
+        GameManager.Instance.onGameStart += CanRotate;
+
+        GameManager.Instance.onGameOver -= CantRotate;
+        GameManager.Instance.onGameOver += CantRotate;
+
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.onGameStart -= CanRotate;
+        GameManager.Instance.onGameOver -= CantRotate;
+    }
+
     private void Update()
     {
         if (canRotate)
             Rotation();
+    }
+
+    public void CanRotate()
+    {
+        canRotate = true;
+    }
+
+    public void CantRotate()
+    {
+        canRotate = false;
     }
 
     private void Rotation()
