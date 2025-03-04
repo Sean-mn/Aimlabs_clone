@@ -16,10 +16,11 @@ public class TargetSpawner : MonoBehaviour
         GameManager.Instance.onGameStart += FirstCreateTargets;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.onGameStart -= FirstCreateTargets;
     }
+
     private void FirstCreateTargets()
     {
         if (targetPoses.Count < 7) return;
@@ -39,15 +40,12 @@ public class TargetSpawner : MonoBehaviour
 
     public IEnumerator Spawn()
     {
-        float waitTime = 0.2f;
+        float waitTime = 0.01f;
 
-        while (GameManager.Instance.GameTime < GameManager.Instance.MaxGameTime)
-        {
-            yield return WaitForSecondsCache.Wait(waitTime);
+        yield return WaitForSecondsCache.Wait(waitTime);
 
-            int createPos = Random.Range(0, targetPoses.Count);
+        int createPos = Random.Range(0, targetPoses.Count);
 
-            Instantiate(targetPrefab, targetPoses[createPos].position, Quaternion.identity);
-        }
+        Instantiate(targetPrefab, targetPoses[createPos].position, Quaternion.identity);
     }
 }
