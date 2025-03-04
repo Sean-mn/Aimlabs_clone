@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Define;
 
 public class Player : MonoBehaviour
 {
@@ -33,9 +34,9 @@ public class Player : MonoBehaviour
         {
             Target target = hit.collider.gameObject.GetComponent<Target>();
 
-            if (hit.collider.CompareTag("Target"))
+            if (hit.collider.CompareTag(Tags.Target))
             {
-                target.Catched();
+                StartCoroutine(target.Catched());
             }
         }
     }
