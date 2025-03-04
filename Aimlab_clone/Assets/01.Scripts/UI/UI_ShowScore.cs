@@ -10,6 +10,4 @@ public class UI_ShowScore : UI
     {
         ScoreText= GetComponent<Text>();
     }
-
-
 }
