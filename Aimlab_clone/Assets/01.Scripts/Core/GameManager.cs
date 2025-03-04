@@ -18,7 +18,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         SetMaxTime(90f);
-        InitGame();
+        GameTime = GetMaxTime();
     }
 
     private void Update()
@@ -28,12 +28,10 @@ public class GameManager : MonoSingleton<GameManager>
         UpdateTime();
     }
 
-    private void InitGame()
+    public void InitGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        GameTime = GetMaxTime();
 
         StartCoroutine(Countdown.StartCountdown(GameStart));
     }
