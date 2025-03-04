@@ -12,6 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     [field: SerializeField,Header("Game Trigger")]
     public bool IsGameStart { get; private set; } = false;
+    [field: SerializeField, Header("Game Trigger")]
     public bool IsGameOver { get; private set; } = false;
 
     public event Action onGameStart;

@@ -16,6 +16,8 @@ public class UI_Timer : UI
     {
         if (GameManager.Instance.IsGameOver)
             UIManager.Instance.DisableUI<Text>(TimerText);
+        else
+            UIManager.Instance.ActiveUI<Text>(TimerText);
 
         UIFunction();
     }
