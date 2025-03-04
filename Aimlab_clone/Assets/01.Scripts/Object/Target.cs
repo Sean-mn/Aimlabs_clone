@@ -9,7 +9,7 @@ public class Target : MonoBehaviour
         targetPrefab = GetComponent<GameObject>();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         ScoreManager.Instance.AddScore(100);
     }
