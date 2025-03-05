@@ -17,9 +17,9 @@ public class Define
 
     public enum Scene
     {
-        UnKnown = 0,
+        Menu = 0,
         Play = 1,
-        Ranking = 2,
+        Rank = 2,
     }
 
     [Flags]
@@ -28,5 +28,12 @@ public class Define
         Menu,
         Playing,
         GameOver,
+    }
+
+    public enum GameLevel
+    {
+        Easy,
+        Normal,
+        Hard,
     }
 }
