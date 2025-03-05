@@ -10,6 +10,8 @@ public class TargetSpawner : MonoBehaviour
     [SerializeField]
     private List<Transform> targetPoses = new List<Transform>();
 
+    public HashSet<Vector3> usedPoses = new HashSet<Vector3>();
+
     private void OnEnable()
     {
         GameManager.Instance.onGameStart -= FirstCreateTargets;
@@ -34,7 +36,11 @@ public class TargetSpawner : MonoBehaviour
 
         for (int i = 0; i < 7; i++)
         {
-            Instantiate(targetPrefab, mixedPoses[i].position, Quaternion.identity);
+            if (!usedPoses.Contains(mixedPoses[i].position))
+            {
+                Instantiate(targetPrefab, mixedPoses[i].position, Quaternion.identity);
+                usedPoses.Add(mixedPoses[i].position);
+            }
         }
     }
 
@@ -44,8 +50,29 @@ public class TargetSpawner : MonoBehaviour
 
         yield return WaitForSecondsCache.Wait(waitTime);
 
-        int createPos = Random.Range(0, targetPoses.Count);
+        Transform spawnPos = CheckAvailablePosition();
 
-        Instantiate(targetPrefab, targetPoses[createPos].position, Quaternion.identity);
+        if (spawnPos != null)
+        {
+            Instantiate(targetPrefab, spawnPos.position, Quaternion.identity);
+            usedPoses.Add(spawnPos.position);
+        }
+    }
+
+    private Transform CheckAvailablePosition()
+    {
+        List<Transform> available = new List<Transform>();
+
+        for (int i = 0; i < targetPoses.Count; i++)
+        {
+            if (!usedPoses.Contains(targetPoses[i].position))
+            {
+                available.Add(targetPoses[i]);
+            }
+        }
+
+        if (available.Count <= 0) return null;
+
+        return available[Random.Range(0, available.Count)];
     }
 }
