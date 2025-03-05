@@ -880,6 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1b77bc3f57cd24094d63278f9813fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <GameOverPanel>k__BackingField: {fileID: 0}
 --- !u!1 &584100075
 GameObject:
   m_ObjectHideFlags: 0

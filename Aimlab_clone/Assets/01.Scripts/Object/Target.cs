@@ -25,7 +25,7 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        ScoreManager.Instance.AddScore(100);
+        ScoreManager.Instance.AddScore(100, UIManager.Instance.ShowScoreUI.UIFunction);
     }
 
     private void OnCollisionEnter(Collision collision)

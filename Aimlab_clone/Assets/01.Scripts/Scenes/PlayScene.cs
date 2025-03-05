@@ -19,6 +19,8 @@ public class PlayScene : BaseScene
     protected override void Init()
     {
         SceneType = Define.Scene.Play;
+
+        UIManager.Instance.InitUI();
         GameManager.Instance.InitGame();
     }
 
