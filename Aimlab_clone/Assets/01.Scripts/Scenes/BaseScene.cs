@@ -4,10 +4,10 @@ public abstract class BaseScene : MonoBehaviour
 {
     public Define.Scene SceneType { get; protected set; }
 
-    protected virtual void Init()
+    protected abstract void Init();
+
+    public void Clear()
     {
 
     }
-
-    public abstract void Clear();
 }
