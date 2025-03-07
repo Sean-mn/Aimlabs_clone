@@ -5,7 +5,7 @@ public class PlayScene : BaseScene
         Init();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         GameManager.Instance.onGameOver -= Clear;
         GameManager.Instance.onGameOver += Clear;
@@ -26,6 +26,6 @@ public class PlayScene : BaseScene
 
     public override void Clear()
     {
-
+        SceneController.Instance.LoadScene(Define.Scene.Rank);
     }
 }
