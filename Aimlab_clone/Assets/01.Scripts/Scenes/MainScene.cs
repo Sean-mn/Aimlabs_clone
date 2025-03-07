@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class MainScene : BaseScene
 {
     private void Awake()
@@ -11,10 +9,5 @@ public class MainScene : BaseScene
     {
         SceneType = Define.Scene.Menu;
         GameManager.Instance.InitMain();
-    }
-
-    public override void Clear()
-    {
-        
     }
 }
